@@ -1,6 +1,6 @@
 from fastapi.routing import APIRouter
 
-from app.routers import echo, monitoring, users
+from app.routers.api import echo, monitoring, users
 
 api_router = APIRouter()
 

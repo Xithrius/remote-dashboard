@@ -43,16 +43,33 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
 async def get_user_db(
     session: Annotated[AsyncSession, Depends(get_db_session)],
 ) -> SQLAlchemyUserDatabase:
+    """
+    Yield a SQLAlchemyUserDatabase instance.
+
+    :param session: asynchronous SQLAlchemy session.
+    :yields: instance of SQLAlchemyUserDatabase.
+    """
     yield SQLAlchemyUserDatabase(session, User)
 
 
 async def get_user_manager(
     user_db: Annotated[SQLAlchemyUserDatabase, Depends(get_user_db)],
 ) -> UserManager:
+    """
+    Yield a UserManager instance.
+
+    :param user_db: SQLAlchemy user db instance
+    :yields: an instance of UserManager.
+    """
     yield UserManager(user_db)
 
 
 def get_jwt_strategy() -> JWTStrategy:
+    """
+    Return a JWTStrategy in order to instantiate it dynamically.
+
+    :returns: instance of JWTStrategy with provided settings.
+    """
     return JWTStrategy(secret=settings.users_secret, lifetime_seconds=None)
 
 

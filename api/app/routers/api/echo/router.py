@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from .schema import Message
+from app.routers.api.echo.schema import Message
 
 router = APIRouter()
 
@@ -9,4 +9,10 @@ router = APIRouter()
 async def send_echo_message(
     incoming_message: Message,
 ) -> Message:
+    """
+    Sends echo back to user.
+
+    :param incoming_message: incoming message.
+    :returns: message same as the incoming.
+    """
     return incoming_message

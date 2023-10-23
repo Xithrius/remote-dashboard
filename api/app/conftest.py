@@ -13,8 +13,8 @@ from sqlalchemy.ext.asyncio import (
 
 from app.database.dependencies import get_db_session
 from app.database.utils import create_database, drop_database
-from app.routers.application import get_app
 from app.settings import settings
+from app.routers.application import get_app
 
 
 @pytest.fixture(scope="session")
@@ -29,6 +29,11 @@ def anyio_backend() -> str:
 
 @pytest.fixture(scope="session")
 async def _engine() -> AsyncGenerator[AsyncEngine, None]:
+    """
+    Create engine and databases.
+
+    :yield: new engine.
+    """
     from app.database.meta import meta
     from app.database.models import load_all_models
 
